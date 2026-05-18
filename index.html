@@ -642,12 +642,16 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'ส่งข้อมูลสำเร็จ!',
-                        html: 'ระบบได้ส่งลิงก์ใบประกาศนียบัตรไปยังอีเมลของท่านแล้ว<br>และท่านสามารถดาวน์โหลดได้จากด้านล่าง',
+                        html: 'ระบบได้ส่งลิงก์ใบประกาศนียบัตรไปยังอีเมลของท่านแล้ว<br>และท่านสามารถดาวน์โหลดได้จากปุ่มด้านล่าง',
                         confirmButtonColor: '#10b981'
                     }).then(() => {
+                        // 1. เคลียร์ค่าในฟอร์มให้ว่างสำหรับการประเมินครั้งต่อไป
                         document.getElementById('evaluationForm').reset();
-                        document.getElementById('certificateSection').classList.remove('show');
-                        window.scrollTo(0, 0);
+                        
+                        // 2. (ลบคำสั่งซ่อนปุ่มดาวน์โหลดออกไป เพื่อให้ปุ่มยังคงแสดงอยู่)
+                        
+                        // 3. สั่งให้เบราว์เซอร์เลื่อนหน้าจอลงมาที่ปุ่มดาวน์โหลดแบบนุ่มนวล
+                        document.getElementById('certificateSection').scrollIntoView({ behavior: 'smooth' });
                     });
                 } else {
                     Swal.fire({
