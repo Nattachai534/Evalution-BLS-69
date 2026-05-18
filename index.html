@@ -563,20 +563,28 @@
             loading.classList.add('show');
             
             try {
-                // Collect form data (เพิ่มการรับค่าจาก textarea ทั้ง 3 ข้อ)
+                // Collect form data (ปรับให้ทนทานต่อการลบช่องกรอกข้อมูล)
+                const positionEl = document.getElementById('position');
+                const positionOtherEl = document.getElementById('positionOther');
+                const genderSelected = document.querySelector('input[name="gender"]:checked');
+                
                 const formData = {
-                    examineeId: document.getElementById('examineeId').value,
-                    trainingDate: document.getElementById('trainingDate').value,
-                    email: document.getElementById('email').value,
-                    gender: document.querySelector('input[name="gender"]:checked').value,
-                    age: document.getElementById('age').value,
-                    organization: document.getElementById('organization').value,
-                    position: document.getElementById('position').value === 'อื่นๆ' ? 
-                        document.getElementById('positionOther').value : 
-                        document.getElementById('position').value,
-                    suggestion1: document.getElementById('suggestion1').value, // สิ่งที่ประทับใจ
-                    suggestion2: document.getElementById('suggestion2').value, // สิ่งที่ควรปรับปรุง
-                    suggestion3: document.getElementById('suggestion3').value  // หัวข้อปีหน้า
+                    examineeId: document.getElementById('examineeId') ? document.getElementById('examineeId').value : '',
+                    trainingDate: document.getElementById('trainingDate') ? document.getElementById('trainingDate').value : '',
+                    email: document.getElementById('email') ? document.getElementById('email').value : '',
+                    gender: genderSelected ? genderSelected.value : '',
+                    age: document.getElementById('age') ? document.getElementById('age').value : '',
+                    
+                    // ดัก Error กรณีลบช่อง "หน่วยงานที่สังกัด" ออกไปจากหน้าเว็บ
+                    organization: document.getElementById('organization') ? document.getElementById('organization').value : '-',
+                    
+                    position: (positionEl && positionEl.value === 'อื่นๆ') ? 
+                        (positionOtherEl ? positionOtherEl.value : '') : 
+                        (positionEl ? positionEl.value : ''),
+                        
+                    suggestion1: document.getElementById('suggestion1') ? document.getElementById('suggestion1').value : '',
+                    suggestion2: document.getElementById('suggestion2') ? document.getElementById('suggestion2').value : '',
+                    suggestion3: document.getElementById('suggestion3') ? document.getElementById('suggestion3').value : ''
                 };
                 
                 // Collect evaluation scores (ดึงค่าจาก Radio Button)
